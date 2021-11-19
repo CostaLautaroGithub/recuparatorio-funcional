@@ -1,7 +1,3 @@
-# ejercicio-alumno
+Costa Lautaro
 
-## Integrantes
-
-- integrante1 (usuario github)
-- integrante2 (usuario github)
-...
+Legajo 11370
