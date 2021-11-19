@@ -52,7 +52,7 @@ nombrepaises :: Paises -> [String]
 nombrepaises paises = map nombre paises
 
 ---------------------------------------------------------------------
-data Fuerzapolitica = Unafuerzapolitica {
+data Fuerzapoliticapolitica = UnaFuerzapoliticapolitica {
     transformacion :: (Pais -> Pais),
     condicion :: ( Indicador -> Bool )
 }deriving (Show, Eq)
@@ -85,40 +85,40 @@ transformarCazabuitre pais = pais { indicadores = setear 0 (ubicar "deuda extern
 transformarpepe :: Pais -> Pais
 transformarpepe pais = pais{indicadores = setear 99 (ubicar "desempleo" pais) : ( todosexcepto "desempleo" indicadores pais ) }
 
-hormigaignorante :: Fuerzapolitica
-hormigaignorante = Unafuerzapolitica transformarhormiga desocupacionalta
+hormigaignorante :: Fuerzapoliticapolitica
+hormigaignorante = UnaFuerzapoliticapolitica transformarhormiga desocupacionalta
 
-eduqueitor :: Fuerzapolitica
-eduqueitor = Unafuerzapolitica transformareduqueitor desocupacionalta
+eduqueitor :: Fuerzapoliticapolitica
+eduqueitor = UnaFuerzapoliticapolitica transformareduqueitor desocupacionalta
 
-duplicador :: Fuerzapolitica
-duplicador = Unafuerzapolitica transformarduplicador empiezacond
+duplicador :: Fuerzapoliticapolitica
+duplicador = UnaFuerzapoliticapolitica transformarduplicador empiezacond
 
-cazabuitre :: Fuerzapolitica
-cazabuitre = Unafuerzapolitica transformarCazabuitre empiezacond
+cazabuitre :: Fuerzapoliticapolitica
+cazabuitre = UnaFuerzapoliticapolitica transformarCazabuitre empiezacond
 
-pepe :: Fuerzapolitica 
-pepe = Unafuerzapolitica transformarpepe empiezacond
+pepe :: Fuerzapoliticapolitica 
+pepe = UnaFuerzapoliticapolitica transformarpepe empiezacond
 
-# Como hay fuerzas politicas que no tienen condicion, se rellena el campó con una aleatoria, la cual no tendra efecto a la hora de gobernar.
+-- Como hay Fuerzapoliticas politicas que no tienen condicion, se rellena el campó con una aleatoria, la cual no tendra efecto a la hora de gobernar.
 ---------------------------------------------
-type Fuerzas = [Fuerzapolitica]
+type Fuerzapoliticas = [Fuerzapoliticapolitica]
 
 
-gobernar :: Pais -> Fuerzapolitica -> Pais
-gobernar pais fuerza = crecerpoblacionunperiodo (transformacion fuerza (pais))
+gobernar :: Pais -> Fuerzapoliticapolitica -> Pais
+gobernar pais fuerzapolitica = crecerpoblacionunperiodo (transformacion fuerzapolitica (pais))
 
-multipartidismo :: Pais -> Fuerzas -> [Pais]
-multipartidismo pais fuerzas  = map (gobernar pais) fuerzas
+multipartidismo :: Pais -> Fuerzapoliticas -> [Pais]
+multipartidismo pais fuerzapolitica  = map (gobernar pais) fuerzapolitica
 
-# Dada una lista de fuerzas, las cuales reciben un pais y devuelven un pais modificado, a la hora de aplicarles a todas un pais usando el map, se genera una lista de los paises modificados por cada fuerza luego de un periodo en el poder.
+-- Dada una lista de Fuerzapoliticas, las cuales reciben un pais y devuelven un pais modificado, a la hora de aplicarles a todas un pais usando el map, se genera una lista de los paises modificados por cada Fuerzapolitica luego de un periodo en el poder.
 
-ejercer :: Pais -> Fuerza -> Int -> Pais
-ejercer pais fuerza periodos = gobernar pais fuerza && periodos (-1) && reelegir pais fuerza periodos
+ejercer :: Pais -> Fuerzapolitica -> Int -> Pais
+ejercer pais fuerzapolitica periodosmaximos = gobernar pais fuerzapolitica &&  reelegir pais fuerzapolitica (periodosmaximos (-1))
 
-reelegir :: Pais -> Fuerza -> Int -> Pais   
-reelegir fuerza pais numerodeperiodos   
-    |estabien (1) pais && periodos /= 0 = gobernar pais fuerza && periodos (-1) && reelegir pais fuerza periodos
+reelegir :: Pais -> Fuerzapolitica -> Int -> Pais   
+reelegir fuerzapolitica pais numerodeperiodos   
+    |estabien (1) pais && periodos /= 0 = gobernar pais fuerzapolitica && reelegir pais fuerzapolitica (periodosmaximos (-1))
     |otherwise = pais
 
 
