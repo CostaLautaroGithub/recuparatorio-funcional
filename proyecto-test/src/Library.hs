@@ -85,8 +85,6 @@ transformarCazabuitre pais = pais { indicadores = setear 0 (ubicar "deuda extern
 transformarpepe :: Pais -> Pais
 transformarpepe pais = pais{indicadores = setear 99 (ubicar "desempleo" pais) : ( todosexcepto "desempleo" indicadores pais ) }
 
-
-
 hormigaignorante :: Fuerzapolitica
 hormigaignorante = Unafuerzapolitica transformarhormiga desocupacionalta
 
@@ -102,6 +100,7 @@ cazabuitre = Unafuerzapolitica transformarCazabuitre empiezacond
 pepe :: Fuerzapolitica 
 pepe = Unafuerzapolitica transformarpepe empiezacond
 
+# Como hay fuerzas politicas que no tienen condicion, se rellena el campó con una aleatoria, la cual no tendra efecto a la hora de gobernar.
 ---------------------------------------------
 type Fuerzas = [Fuerzapolitica]
 
@@ -109,8 +108,19 @@ type Fuerzas = [Fuerzapolitica]
 gobernar :: Pais -> Fuerzapolitica -> Pais
 gobernar pais fuerza = crecerpoblacionunperiodo (transformacion fuerza (pais))
 
-multipartidismo :: Fuerzas -> Pais -> Pais
-multipartidismo fuerzas pais = map fuerzas pais
+multipartidismo :: Pais -> Fuerzas -> [Pais]
+multipartidismo pais fuerzas  = map (gobernar pais) fuerzas
+
+# Dada una lista de fuerzas, las cuales reciben un pais y devuelven un pais modificado, a la hora de aplicarles a todas un pais usando el map, se genera una lista de los paises modificados por cada fuerza luego de un periodo en el poder.
+
+ejercer :: Pais -> Fuerza -> Int -> Pais
+ejercer pais fuerza periodos = gobernar pais fuerza && periodos (-1) && reelegir pais fuerza periodos
+
+reelegir :: Pais -> Fuerza -> Int -> Pais   
+reelegir fuerza pais numerodeperiodos   
+    |estabien (1) pais && periodos /= 0 = gobernar pais fuerza && periodos (-1) && reelegir pais fuerza periodos
+    |otherwise = pais
+
 
 
 
