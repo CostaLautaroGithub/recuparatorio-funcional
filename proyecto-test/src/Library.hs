@@ -110,7 +110,7 @@ gobernar pais fuerzapolitica = crecerpoblacionunperiodo (transformacion fuerzapo
 multipartidismo :: Pais -> Fuerzapolitica -> [Pais]
 multipartidismo pais fuerzapolitica  = map (gobernar pais) fuerzapolitica
 
--- Dada una lista de Fuerzapoliticas, las cuales reciben un pais y devuelven un pais modificado, a la hora de aplicarles a todas un pais usando el map, se genera una lista de los paises modificados por cada Fuerzapolitica luego de un periodo en el poder.
+-- Dada una lista de fuerzas politicas, las cuales reciben un pais y devuelven un pais modificado, a la hora de aplicarles a todas un pais usando el map, se genera una lista de los paises modificados por cada Fuerzapolitica luego de un periodo en el poder.
 
 ejercer :: Pais -> Fuerzapolitica -> Number -> Pais
 ejercer pais fuerzapolitica periodosmaximos = gobernar pais fuerzapolitica &&  reelegir pais fuerzapolitica (periodosmaximos (-1))
@@ -119,6 +119,7 @@ reelegir :: Pais -> Fuerzapolitica -> Number -> Pais
 reelegir fuerzapolitica pais numerodeperiodos   
     |estabien (1) pais && numerodeperiodos /= 0 = gobernar pais fuerzapolitica && reelegir pais fuerzapolitica (numerodeperiodos (-1))
     |otherwise = pais
+
 
 
 
